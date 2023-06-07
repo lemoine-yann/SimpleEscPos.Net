@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEscPos.Net", "SimpleEscPos.Net.csproj", "{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{DBC599B4-0E18-4D2E-89FC-B82A16B9B3A3}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9F2F376-A017-4053-80F4-5807476EB091}
+	EndGlobalSection
+EndGlobal
