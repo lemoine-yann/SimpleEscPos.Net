@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEscPos.Net", "SimpleEscPos.Net.csproj", "{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEscPos.Net", "SimpleEscPos.Net.csproj", "{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{DBC599B4-0E18-4D2E-89FC-B82A16B9B3A3}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleEscPos", "ExampleEscPos\ExampleEscPos.csproj", "{AE63F87F-34D7-4AF0-A75A-F033B47096BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7770EFD4-7A51-4C02-A76B-CF7B34F66F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE63F87F-34D7-4AF0-A75A-F033B47096BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE63F87F-34D7-4AF0-A75A-F033B47096BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE63F87F-34D7-4AF0-A75A-F033B47096BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE63F87F-34D7-4AF0-A75A-F033B47096BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
