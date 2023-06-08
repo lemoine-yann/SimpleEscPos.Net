@@ -2,9 +2,11 @@
 // EscPrinter by Lemoine Yann
 // Visit https://github.com/lemoine-yann/SimpleEscPos.Net
 
+using System.Data;
 using System.Formats.Asn1;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace SimpleEscPos.Net
 {
@@ -48,6 +50,8 @@ namespace SimpleEscPos.Net
         /// <param name="printerMode">Printer Mode</param>
         public EscPrinter(string ip, int port, EscPrinterMode printerMode)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             Ip = ip;
             Port = port;
             PrinterMode = printerMode;
@@ -79,6 +83,8 @@ namespace SimpleEscPos.Net
 
             socket.Connect(Ip, Port);
             socket.Send(_buffer.ToArray());
+
+            ReinitializeBuffer(false);
         }
 
         /// <summary>
@@ -87,9 +93,58 @@ namespace SimpleEscPos.Net
         public void Print()
         {
             if (PrinterMode != EscPrinterMode.BufferMode)
-                throw new System.Exception("Printer mode is not BufferMode");
+                throw new System.Exception("Printer is not BufferMode");
 
             FlushBuffer();
+        }
+
+        /// <summary>
+        /// Print custom bytecodes
+        /// </summary>
+        /// <param name="data"></param>
+        public void Print(byte[] data)
+        {
+            _buffer.Write(data);
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Print byte, number times
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="number"></param>
+        public void Print(byte data, int number = 1)
+        {
+            if (number < 1)
+                throw new System.Exception("Number must be greater than 0");
+
+            for(int i = 0; i < number; i++)
+                _buffer.WriteByte(data);
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Print string
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="addCarrierReturn"></param>
+        /// <param name="pageCode"></param>
+        public void Print(string data, bool addCarrierReturn = true, byte pageCode = 32)
+        {
+            data = data.Replace("\r", string.Empty).Replace("\n", string.Empty);
+
+            if (addCarrierReturn)
+                data = string.Concat(data, "\n");
+
+            _buffer.Write(new byte[] { 27, 29, 116, pageCode }); // Set Code printer codepage, by default 32 mean 1252 [ESC,GS,t,32] , see ESC/POS documentation for details
+            _buffer.Write(Encoding.GetEncoding(1252).GetBytes(data));
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
         }
 
         /// <summary>
@@ -98,15 +153,34 @@ namespace SimpleEscPos.Net
         /// <param name="lines"></param>
         public void PaperFeed(byte lines)
         {
-            _buffer.Write(new byte[] { 27, 100, lines }); // ESC Feed lines [ESC,d,lines]
+            _buffer.Write(new byte[] { 27, 100, lines }); // Feed lines [ESC,d,lines]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();
         }
 
+        /// <summary>
+        /// Cut paper
+        /// </summary>
         public void Cut()
         {
-            _buffer.Write(new byte[] { 29, 86, 48 }); // ESC Paper Cut [GS,V,0]
+            _buffer.Write(new byte[] { 29, 86, 0 }); // Paper Cut [GS,V,NULL]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Set character size (0 to +7 vertical/horizontal)
+        /// </summary>
+        /// <param name="horizontalSize"></param>
+        /// <param name="verticalSize"></param>
+        public void SetCharacterSizeMagnification(byte horizontalSize, byte verticalSize)
+        {
+            if (horizontalSize > 7 || verticalSize > 7)
+                throw new System.Exception("Horizontal and vertical size must be between 0 and 7");
+
+            _buffer.Write(new byte[] { 29, 33, 7 }); // Select character siz [GS,!,horizontalSize/verticalSize]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();

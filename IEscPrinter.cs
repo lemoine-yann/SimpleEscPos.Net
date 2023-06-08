@@ -34,10 +34,38 @@ namespace SimpleEscPos.Net
         public void Print();
 
         /// <summary>
+        /// Print custom bytecodes
+        /// </summary>
+        /// <param name="data"></param>
+        public void Print(byte[] data);
+
+        /// <summary>
+        /// Print byte, number times
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="number"></param>
+        public void Print(byte data, int number = 1);
+
+        /// <summary>
+        /// Print string
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="addCarrierReturn"></param>
+        /// <param name="pageCode"></param>
+        public void Print(string data, bool addCarrierReturn = true, byte pageCode = 32);
+
+        /// <summary>
         /// Feed paper for n lines
         /// </summary>
         /// <param name="lines"></param>
         public void PaperFeed(byte lines);
+
+        /// <summary>
+        /// Set character size (0 to +7 vertical/horizontal)
+        /// </summary>
+        /// <param name="horizontalSize"></param>
+        /// <param name="verticalSize"></param>
+        public void SetCharacterSizeMagnification(byte horizontalSize, byte verticalSize);
 
         /// <summary>
         /// Cut paper
