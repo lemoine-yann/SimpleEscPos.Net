@@ -27,9 +27,9 @@ namespace ExampleEscPos
             myprinter.SetBold(false);*/
             myprinter.SetCharacterSizeMagnification(7,7);
             //myprinter.Print(new byte[] { 29, 66, 1 });
-            myprinter.SetInverted(true);
+            myprinter.SetFont(FontMode.FontA);
             myprinter.Print("reretest");
-            myprinter.SetInverted(false);
+            myprinter.SetFont(FontMode.FontB);
             myprinter.Print("reretest");
 
             /*myprinter.Print("╔══════════════════════╗");

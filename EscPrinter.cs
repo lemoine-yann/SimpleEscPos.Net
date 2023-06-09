@@ -30,6 +30,12 @@ namespace SimpleEscPos.Net
         TwoDot
     }
 
+    public enum FontMode
+    {
+        FontA,
+        FontB
+    }
+
     public class EscPrinter : IEscPrinter
     {
         /// <summary>
@@ -233,7 +239,20 @@ namespace SimpleEscPos.Net
         /// <param name="inverted"></param>
         public void SetInverted(bool inverted)
         {
-            _buffer.Write(new byte[] {29, 66, inverted ? (byte) 1 : (byte) 0}); // Select inverted mode [GS,B,invertedmode]
+            _buffer.Write(new byte[]
+                {29, 66, inverted ? (byte) 1 : (byte) 0}); // Select inverted mode [GS,B,invertedmode]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Select font A/B
+        /// </summary>
+        /// <param name="fontMode"></param>
+        public void SetFont(FontMode fontMode)
+        {
+            _buffer.Write(new byte[] {27, 77, (byte) fontMode}); // Select font [ESC,M,fontmode]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();

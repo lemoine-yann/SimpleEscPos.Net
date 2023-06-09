@@ -87,6 +87,12 @@ namespace SimpleEscPos.Net
         public void SetInverted(bool inverted);
 
         /// <summary>
+        /// Select font A/B
+        /// </summary>
+        /// <param name="fontMode"></param>
+        public void SetFont(FontMode fontMode);
+
+        /// <summary>
         /// Cut paper
         /// </summary>
         public void Cut();
