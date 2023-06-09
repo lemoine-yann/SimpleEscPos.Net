@@ -132,8 +132,9 @@ namespace SimpleEscPos.Net
         /// </summary>
         /// <param name="data"></param>
         /// <param name="addCarrierReturn"></param>
-        /// <param name="pageCode"></param>
-        public void Print(string data, bool addCarrierReturn = true, byte pageCode = 32)
+        /// <param name="pageCode">printer page code</param>
+        /// <param name="encoding">data page code</param>
+        public void Print(string data, bool addCarrierReturn = true, byte pageCode = 32, int encoding = 1252)
         {
             data = data.Replace("\r", string.Empty).Replace("\n", string.Empty);
 
@@ -141,7 +142,7 @@ namespace SimpleEscPos.Net
                 data = string.Concat(data, "\n");
 
             _buffer.Write(new byte[] { 27, 29, 116, pageCode }); // Set Code printer codepage, by default 32 mean 1252 [ESC,GS,t,32] , see ESC/POS documentation for details
-            _buffer.Write(Encoding.GetEncoding(1252).GetBytes(data));
+            _buffer.Write(Encoding.GetEncoding(encoding).GetBytes(data));
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();
@@ -180,7 +181,7 @@ namespace SimpleEscPos.Net
             if (horizontalSize > 7 || verticalSize > 7)
                 throw new System.Exception("Horizontal and vertical size must be between 0 and 7");
 
-            _buffer.Write(new byte[] { 29, 33, 7 }); // Select character siz [GS,!,horizontalSize/verticalSize]
+            _buffer.Write(new byte[] { 29, 33, (byte)((horizontalSize << 4) | verticalSize) }); // Select character size [GS,!,horizontalSize/verticalSize]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();

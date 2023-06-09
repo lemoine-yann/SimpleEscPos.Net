@@ -8,7 +8,7 @@ Compiled with .Net 7 and tested on Star TSP800-II Emulation mode Esc/Pos
 
 ## Notes
 
-Library use 1252 codepage, you can easily change it in the code (pageCode 32 by default). Check Epson documentation about [ESC,GS,t,xx]
+Library use 1252 codepage, if you need another pagecode please check Espon documentation about [ESC,GS,t,xx] , in my case parameter 32 mean 1252
 
 If you use a printer on Samba protocol, you can easily replace the socket by copying buffer on network stream.
 

@@ -51,8 +51,9 @@ namespace SimpleEscPos.Net
         /// </summary>
         /// <param name="data"></param>
         /// <param name="addCarrierReturn"></param>
-        /// <param name="pageCode"></param>
-        public void Print(string data, bool addCarrierReturn = true, byte pageCode = 32);
+        /// <param name="pageCode">printer page code</param>
+        /// <param name="encoding">data page code</param>
+        public void Print(string data, bool addCarrierReturn = true, byte pageCode = 32, int encoding = 1252);
 
         /// <summary>
         /// Feed paper for n lines

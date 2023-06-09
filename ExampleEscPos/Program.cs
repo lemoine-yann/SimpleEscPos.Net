@@ -13,7 +13,7 @@ namespace ExampleEscPos
             //myprinter.Print(205, 40);
             //myprinter.Print(new byte[] { 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 29, 33, 119, 27, 45, 50 });
 
-            myprinter.SetCharacterSizeMagnification(0, 0);
+            myprinter.SetCharacterSizeMagnification(4, 4);
             myprinter.Print("test");
 
             /*myprinter.Print("╔══════════════════════╗");
