@@ -221,7 +221,19 @@ namespace SimpleEscPos.Net
         /// <param name="bold"></param>
         public void SetBold(bool bold)
         {
-            _buffer.Write(new byte[] { 27, 69, bold ? (byte)1 : (byte)0 }); // Select bold mode [ESC,E,boldmode]
+            _buffer.Write(new byte[] {27, 69, bold ? (byte) 1 : (byte) 0}); // Select bold mode [ESC,E,boldmode]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Set inverted mode black/white
+        /// </summary>
+        /// <param name="inverted"></param>
+        public void SetInverted(bool inverted)
+        {
+            _buffer.Write(new byte[] {29, 66, inverted ? (byte) 1 : (byte) 0}); // Select inverted mode [GS,B,invertedmode]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();

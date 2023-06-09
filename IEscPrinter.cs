@@ -81,6 +81,12 @@ namespace SimpleEscPos.Net
         public void SetBold(bool bold);
 
         /// <summary>
+        /// Set inverted mode black/white
+        /// </summary>
+        /// <param name="inverted"></param>
+        public void SetInverted(bool inverted);
+
+        /// <summary>
         /// Cut paper
         /// </summary>
         public void Cut();
