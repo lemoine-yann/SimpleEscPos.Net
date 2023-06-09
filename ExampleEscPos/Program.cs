@@ -14,11 +14,17 @@ namespace ExampleEscPos
             //myprinter.Print(new byte[] { 201, 205, 205, 205, 205, 205, 205, 205, 205, 205, 205, 29, 33, 119, 27, 45, 50 });
 
             //myprinter.SetCharacterSizeMagnification(4, 4);
-            myprinter.SetUnderlineMode(UnderlineMode.OneDot);
+            /*myprinter.SetUnderlineMode(UnderlineMode.OneDot);
             myprinter.Print("test");
             myprinter.SetUnderlineMode(UnderlineMode.TwoDot);
             myprinter.Print("retest");
             myprinter.SetUnderlineMode(UnderlineMode.Off);
+            myprinter.SetCharacterSizeMagnification(4, 4);
+            myprinter.Print("reretest");
+            //myprinter.Print(new byte[] { 27, 69, 1 });
+            myprinter.SetBold(true);
+            myprinter.Print("reretest");
+            myprinter.SetBold(false);*/
             myprinter.Print("reretest");
 
             /*myprinter.Print("╔══════════════════════╗");

@@ -216,6 +216,18 @@ namespace SimpleEscPos.Net
         }
 
         /// <summary>
+        /// Set bold mode
+        /// </summary>
+        /// <param name="bold"></param>
+        public void SetBold(bool bold)
+        {
+            _buffer.Write(new byte[] { 27, 69, bold ? (byte)1 : (byte)0 }); // Select bold mode [ESC,E,boldmode]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
         /// Dispose instance
         /// </summary>
         public void Dispose()

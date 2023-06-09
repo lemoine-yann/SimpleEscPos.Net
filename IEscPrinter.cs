@@ -75,6 +75,12 @@ namespace SimpleEscPos.Net
         public void SetUnderlineMode(UnderlineMode underlineMode);
 
         /// <summary>
+        /// Set bold mode
+        /// </summary>
+        /// <param name="bold"></param>
+        public void SetBold(bool bold);
+
+        /// <summary>
         /// Cut paper
         /// </summary>
         public void Cut();
