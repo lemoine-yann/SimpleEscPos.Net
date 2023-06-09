@@ -259,6 +259,18 @@ namespace SimpleEscPos.Net
         }
 
         /// <summary>
+        /// Set clockwise rotation mode
+        /// </summary>
+        /// <param name="rotate"></param>
+        public void SetClockwiseRotation(bool rotate)
+        {
+            _buffer.Write(new byte[] {27, 86, rotate ? (byte) 1 : (byte) 0}); // Select clockwise rotation mode [ESC,V,rotate]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
         /// Dispose instance
         /// </summary>
         public void Dispose()

@@ -93,6 +93,12 @@ namespace SimpleEscPos.Net
         public void SetFont(FontMode fontMode);
 
         /// <summary>
+        /// Set clockwise rotation mode
+        /// </summary>
+        /// <param name="rotate"></param>
+        public void SetClockwiseRotation(bool rotate);
+
+        /// <summary>
         /// Cut paper
         /// </summary>
         public void Cut();
