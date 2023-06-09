@@ -36,6 +36,48 @@ namespace SimpleEscPos.Net
         FontB
     }
 
+    /// <summary>
+    /// Barcode type
+    /// </summary>
+    public enum BarcodeType
+    {
+        UpcA = 65,
+        UpcE = 66,
+        Jan13Ean13 = 67,
+        Jan8Ean8 = 68,
+        Code39 = 69,
+        Itf = 70,
+        CodebarNw7 = 71,
+        Code93 = 72,
+        Code128 = 73,
+        Gs1128 = 74,
+        Gs1DatabarOmnidirectional = 75,
+        Gs1DatabarTruncated = 76,
+        Gs1DatabarLimited = 77,
+        Gs1DatabarEexpanded = 78,
+    }
+
+    /// <summary>
+    /// Barcode code
+    /// </summary>
+    public enum BarcodeCode
+    {
+        CodeA = 0x41,
+        CodeB = 0x42,
+        CodeC = 0x43,
+    }
+
+    /// <summary>
+    /// Barcode characters position
+    /// </summary>
+    public enum BarcodeTextPosition
+    {
+        None = 0,
+        Above = 1,
+        Below = 2,
+        Both = 3
+    }
+
     public class EscPrinter : IEscPrinter
     {
         /// <summary>
@@ -265,6 +307,44 @@ namespace SimpleEscPos.Net
         public void SetClockwiseRotation(bool rotate)
         {
             _buffer.Write(new byte[] {27, 86, rotate ? (byte) 1 : (byte) 0}); // Select clockwise rotation mode [ESC,V,rotate]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        public void PrintBarcode(BarcodeType barcodeType, string data, byte height = 162, byte width = 3, BarcodeTextPosition position = BarcodeTextPosition.Below, BarcodeCode code = BarcodeCode.CodeA, FontMode fontMode = FontMode.FontA)
+        {
+            if (width < 1 || width > 6)
+                throw new System.Exception("Width must be between 1 and 6");
+
+            if (barcodeType == BarcodeType.Code128) // Code128 must have a start code
+            {
+                if (code == BarcodeCode.CodeC) // Code C must have an even number of digits
+                {
+                    byte[] bytesData = Encoding.ASCII.GetBytes(data);
+                    byte[] fixedData = new byte[bytesData.Length / 2];
+                    for (int i = 0, obc = 0; i < bytesData.Length; i += 2)
+                    {
+                        fixedData[obc++] = (byte)(((bytesData[i] - '0') * 10) + (bytesData[i + 1] - '0'));
+                    }
+                    data = Encoding.ASCII.GetString(fixedData);
+                }
+                data = data.Replace("{", "{{"); // Escape { character
+                data = $"{(char)0x7B}{(char)code}" + data; // Add start code
+            }
+
+            // Set position
+            _buffer.Write(new byte[] {29, 72, (byte) position}); // Select print position of HRI characters [GS,H,position]
+            // Set font mode
+            _buffer.Write(new byte[] {29, 102, (byte) fontMode}); // Select font for HRI characters [GS,f,fontmode]
+            // Set height
+            _buffer.Write(new byte[] {29, 104, height}); // Set barcode height [GS,h,height]
+            // Set width
+            _buffer.Write(new byte[] {29, 119, width}); // Set barcode width [GS,w,width]
+
+            _buffer.Write(new byte[] {29, 107, (byte) barcodeType}); // Select barcode type [GS,k,barcodetype]
+            _buffer.Write(new byte[] { (byte) data.Length }); // barcode length
+            _buffer.Write(Encoding.ASCII.GetBytes(data)); // barcode data
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();

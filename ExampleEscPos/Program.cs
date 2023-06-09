@@ -1,4 +1,5 @@
-﻿using SimpleEscPos.Net;
+﻿using System.Text;
+using SimpleEscPos.Net;
 
 namespace ExampleEscPos
 {
@@ -25,16 +26,23 @@ namespace ExampleEscPos
             myprinter.SetBold(true);
             myprinter.Print("reretest");
             myprinter.SetBold(false);*/
-            myprinter.SetCharacterSizeMagnification(7,7);
+            //myprinter.SetCharacterSizeMagnification(7,7);
             //myprinter.Print(new byte[] { 29, 66, 1 });
             //myprinter.SetFont(FontMode.FontA);
             //myprinter.Print(new byte[] { 27, 86, 1 });
-            myprinter.SetClockwiseRotation(true);
-            myprinter.Print("reretest");
+            //myprinter.SetClockwiseRotation(true);
+            //myprinter.Print("reretest");
             //myprinter.SetFont(FontMode.FontB);
             //myprinter.Print(new byte[] { 27, 86, 0 });
-            myprinter.SetClockwiseRotation(false);
-            myprinter.Print("reretest");
+            //myprinter.SetClockwiseRotation(false);
+            //myprinter.Print("reretest");
+            //for (int i = 0; i < 15; i++)
+            //{
+                //myprinter.Print(new byte[] {29, 107, 65, 12});
+                //myprinter.Print(Encoding.ASCII.GetBytes("327939270141"));
+                //myprinter.Print(new byte[] {0});
+                myprinter.PrintBarcode(BarcodeType.Code128, "2100505045454", 60, 3, BarcodeTextPosition.Both);
+            //}
 
             /*myprinter.Print("╔══════════════════════╗");
             myprinter.Print("║ Bon de préparation   ║");
