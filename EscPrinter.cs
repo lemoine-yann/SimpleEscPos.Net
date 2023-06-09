@@ -20,6 +20,16 @@ namespace SimpleEscPos.Net
         BufferMode
     }
 
+    /// <summary>
+    /// Underline mode
+    /// </summary>
+    public enum UnderlineMode
+    {
+        Off,
+        OneDot,
+        TwoDot
+    }
+
     public class EscPrinter : IEscPrinter
     {
         /// <summary>
@@ -65,7 +75,7 @@ namespace SimpleEscPos.Net
             _buffer.Dispose();
             _buffer = new MemoryStream();
             if (firstInit)
-                _buffer.Write(new byte[] { 27, 64, 27, 83 }); // ESC Reinit [ESC,@] ESC Standard mode [ESC,S]
+                _buffer.Write(new byte[] {27, 64, 27, 83}); // ESC Reinit [ESC,@] ESC Standard mode [ESC,S]
         }
 
         /// <summary>
@@ -120,7 +130,7 @@ namespace SimpleEscPos.Net
             if (number < 1)
                 throw new System.Exception("Number must be greater than 0");
 
-            for(int i = 0; i < number; i++)
+            for (int i = 0; i < number; i++)
                 _buffer.WriteByte(data);
 
             if (PrinterMode == EscPrinterMode.DirectMode)
@@ -141,7 +151,10 @@ namespace SimpleEscPos.Net
             if (addCarrierReturn)
                 data = string.Concat(data, "\n");
 
-            _buffer.Write(new byte[] { 27, 29, 116, pageCode }); // Set Code printer codepage, by default 32 mean 1252 [ESC,GS,t,32] , see ESC/POS documentation for details
+            _buffer.Write(new byte[]
+            {
+                27, 29, 116, pageCode
+            }); // Set Code printer codepage, by default 32 mean 1252 [ESC,GS,t,32] , see ESC/POS documentation for details
             _buffer.Write(Encoding.GetEncoding(encoding).GetBytes(data));
 
             if (PrinterMode == EscPrinterMode.DirectMode)
@@ -154,7 +167,7 @@ namespace SimpleEscPos.Net
         /// <param name="lines"></param>
         public void PaperFeed(byte lines)
         {
-            _buffer.Write(new byte[] { 27, 100, lines }); // Feed lines [ESC,d,lines]
+            _buffer.Write(new byte[] {27, 100, lines}); // Feed lines [ESC,d,lines]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();
@@ -165,7 +178,7 @@ namespace SimpleEscPos.Net
         /// </summary>
         public void Cut()
         {
-            _buffer.Write(new byte[] { 29, 86, 0 }); // Paper Cut [GS,V,NULL]
+            _buffer.Write(new byte[] {29, 86, 0}); // Paper Cut [GS,V,NULL]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();
@@ -181,7 +194,22 @@ namespace SimpleEscPos.Net
             if (horizontalSize > 7 || verticalSize > 7)
                 throw new System.Exception("Horizontal and vertical size must be between 0 and 7");
 
-            _buffer.Write(new byte[] { 29, 33, (byte)((horizontalSize << 4) | verticalSize) }); // Select character size [GS,!,horizontalSize/verticalSize]
+            _buffer.Write(new byte[]
+            {
+                29, 33, (byte) ((horizontalSize << 4) | verticalSize)
+            }); // Select character size [GS,!,horizontalSize/verticalSize]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Set underline mode (none/onedot/twodots)
+        /// </summary>
+        /// <param name="underlineMode"></param>
+        public void SetUnderlineMode(UnderlineMode underlineMode)
+        {
+            _buffer.Write(new byte[] {27, 45, (byte) underlineMode}); // Select underline mode [ESC,-,underlineMode]
 
             if (PrinterMode == EscPrinterMode.DirectMode)
                 FlushBuffer();

@@ -69,6 +69,12 @@ namespace SimpleEscPos.Net
         public void SetCharacterSizeMagnification(byte horizontalSize, byte verticalSize);
 
         /// <summary>
+        /// Set underline mode (none/onedot/twodots)
+        /// </summary>
+        /// <param name="underlineMode"></param>
+        public void SetUnderlineMode(UnderlineMode underlineMode);
+
+        /// <summary>
         /// Cut paper
         /// </summary>
         public void Cut();
