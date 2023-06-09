@@ -41,6 +41,7 @@ namespace ExampleEscPos
                 //myprinter.Print(new byte[] {29, 107, 65, 12});
                 //myprinter.Print(Encoding.ASCII.GetBytes("327939270141"));
                 //myprinter.Print(new byte[] {0});
+                myprinter.SetAlign(AlignMode.Center);
                 myprinter.PrintBarcode(BarcodeType.Code128, "2100505045454", 60, 3, BarcodeTextPosition.Both);
             //}
 

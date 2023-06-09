@@ -78,6 +78,16 @@ namespace SimpleEscPos.Net
         Both = 3
     }
 
+    /// <summary>
+    /// Text/objects align mode
+    /// </summary>
+    public enum AlignMode
+    {
+        Left,
+        Center,
+        Right
+    }
+
     public class EscPrinter : IEscPrinter
     {
         /// <summary>
@@ -312,6 +322,29 @@ namespace SimpleEscPos.Net
                 FlushBuffer();
         }
 
+        /// <summary>
+        /// Align text
+        /// </summary>
+        /// <param name="align"></param>
+        public void SetAlign(AlignMode align)
+        {
+            _buffer.Write(new byte[] {27, 97, (byte) align}); // Select align [ESC,a,align]
+
+            if (PrinterMode == EscPrinterMode.DirectMode)
+                FlushBuffer();
+        }
+
+        /// <summary>
+        /// Print barcode
+        /// </summary>
+        /// <param name="barcodeType">barcode type</param>
+        /// <param name="data">barcode data</param>
+        /// <param name="height">height</param>
+        /// <param name="width">width</param>
+        /// <param name="position">position for characters</param>
+        /// <param name="code">code for code128 A/B/C</param>
+        /// <param name="fontMode">font mode</param>
+        /// <exception cref="System.Exception"></exception>
         public void PrintBarcode(BarcodeType barcodeType, string data, byte height = 162, byte width = 3, BarcodeTextPosition position = BarcodeTextPosition.Below, BarcodeCode code = BarcodeCode.CodeA, FontMode fontMode = FontMode.FontA)
         {
             if (width < 1 || width > 6)
