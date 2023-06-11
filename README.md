@@ -4,6 +4,10 @@
 
 Compiled with .Net 7 and tested on Star TSP800-II Emulation mode Esc/Pos
 
+## Preview
+
+![Output Preview](https://s3.eu-west-1.amazonaws.com/lemoine.yann/github/escpos/escpos_preview.jpg)
+
 ## Basic Usage
 
 ## Notes

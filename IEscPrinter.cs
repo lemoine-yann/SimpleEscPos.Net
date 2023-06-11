@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -27,6 +28,21 @@ namespace SimpleEscPos.Net
         /// Printer Port
         /// </summary>
         public int Port { get; }
+
+        /// <summary>
+        /// Reset printer to default values
+        /// </summary>
+        public void ReinitializePrinter();
+
+        /// <summary>
+        /// Clear buffer
+        /// </summary>
+        public void ClearBuffer();
+
+        /// <summary>
+        /// Cut paper
+        /// </summary>
+        public void Cut();
 
         /// <summary>
         /// Print data in buffer
@@ -109,11 +125,25 @@ namespace SimpleEscPos.Net
         /// <param name="code">code for code128 A/B/C</param>
         /// <param name="fontMode">font mode</param>
         /// <exception cref="System.Exception"></exception>
-        public void PrintBarcode(BarcodeType barcodeType, string data, byte height = 162, byte width = 3, BarcodeTextPosition position = BarcodeTextPosition.Below, BarcodeCode code = BarcodeCode.CodeA, FontMode fontMode = FontMode.FontA);
+        public void PrintBarcode(BarcodeType barcodeType, string data, byte height = 162, byte width = 3, BarcodeTextPosition position = BarcodeTextPosition.Below, BarcodeCode code = BarcodeCode.CodeB, FontMode fontMode = FontMode.FontA);
 
         /// <summary>
-        /// Cut paper
+        /// Print 2D Barcode / QR Code
         /// </summary>
-        public void Cut();
+        /// <param name="barcodeType"></param>
+        /// <param name="data"></param>
+        /// <param name="size"></param>
+        /// <param name="correctionLevel"></param>
+        public void PrintBarcode2D(Barcode2DType barcodeType, string data, Barcode2DSize size = Barcode2DSize.Normal, Barcode2DCorrectionLevel correctionLevel = Barcode2DCorrectionLevel.Percent7);
+
+        /// <summary>
+        /// Print Image (Note: printer is reset to default values after printing)
+        /// </summary>
+        /// <param name="image">Source image</param>
+        /// <param name="threshold">threshold for black and white balance</param>
+        /// <param name="multiplier">size multiplier</param>
+        /// <param name="inverted">invert black and white</param>
+        /// <returns></returns>
+        public void PrintImage(Bitmap image, int threshold = 127, double multiplier = 300, bool inverted = false);
     }
 }
