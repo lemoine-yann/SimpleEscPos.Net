@@ -10,6 +10,58 @@ Compiled with .Net 7 and tested on Star TSP800-II Emulation mode Esc/Pos
 
 ## Basic Usage
 
+### Instantiate the library in direct mode
+
+```
+EscPrinter myprinter = new EscPrinter("192.168.1.30", 9100, EscPrinterMode.DirectMode);
+myprinter.Print("Hello world !"); // Data is sent directly to the printer and instantly printed
+myprinter.Print("Other line");
+myprinter.Dispose(); // Dipose lib
+```
+
+### Alternatively, you can use the library in buffer mode
+
+```
+EscPrinter myprinter = new EscPrinter("192.168.1.30", 9100, EscPrinterMode.BufferMode);
+myprinter.Print("Hello world !"); // Data is stored in a buffer, nothing is sent to the printer
+myprinter.Print("Other line"); // Data is stored in a buffer, nothing is sent to the printer
+myprinter.Print(); // Data is sent to the printer and printed
+myprinter.Dispose(); // Dipose lib
+```
+
+### Print a barcode
+
+```
+myprinter.PrintBarcode(BarcodeType.Code128, "123456789");
+```
+
+### Print image
+
+```
+myprinter.PrintImage(bitmap source);
+```
+
+## List of commands
+
+|    Command                     |          Action                   |
+|:------------------------------:|:---------------------------------:|
+| ReinitializePrinter            | Reset printer                     |
+| ClearBuffer                    | Clear buffer                      |
+| Cut                            | Cut the paper                     |
+| Print()                        | Print the buffer (in buffer mode) |
+| Print(byte[])                  | Print bytes or direct commands    |
+| Print(byte)                    | Print byte                        |
+| Print(string, parameters       | Print text                        |
+| PaperFeed                      | Feed paper                        |
+| SetCharacterSizeMagnification  | Set characters size               |
+| SetUnderlineMode               | Set/Unset underline text          |
+| SetBold                        | Set/Unset bold text               |
+| SetInverted                    | Set/Unset inverted text (B&W)     |
+| SetClockwiseRotation           | Set text/objects rotation         |
+| PrintBarcode                   | Print 1D barcode                  |
+| PrintBarcode2D                 | Print 2D/QR code                  |
+| PrintImage                     | Print images                      |
+
 ## Notes
 
 Library use 1252 codepage, if you need another pagecode please check Espon documentation about [ESC,GS,t,xx] , in my case parameter 32 mean 1252

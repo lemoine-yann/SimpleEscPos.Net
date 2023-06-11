@@ -39,7 +39,7 @@ namespace ExampleEscPos
             myprinter.SetInverted(false);
             myprinter.SetCharacterSizeMagnification(1, 1);
             myprinter.Print("áéíóúçãõàèìòùâêîôû");
-
+            
             // feed paper
             myprinter.PaperFeed(10);
             // cut paper
